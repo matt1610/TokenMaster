@@ -1,8 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 
 namespace TokenMaster.Models
 {
@@ -16,6 +19,47 @@ namespace TokenMaster.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        private string userEvents { get; set; }
+        public string CompanyName { get; set; }
+        public bool EventCreator { get; set; }
+        private string attendingEvents { get; set; }
+
+        [NotMapped]
+        public List<UserEvent> AttendingEvents
+        {
+            get
+            {
+                if (attendingEvents != null)
+                {
+                    return JsonConvert.DeserializeObject<List<UserEvent>>(attendingEvents);
+                }
+                return new List<UserEvent>();
+            }
+            set
+            {
+                attendingEvents = JsonConvert.SerializeObject(value);
+            }
+        }
+
+        [NotMapped]
+        public List<EventModel> UserEvents
+        {
+            get
+            {
+                if (userEvents != null)
+                {
+                    return JsonConvert.DeserializeObject<List<EventModel>>(userEvents);
+                }
+                return new List<EventModel>();
+            }
+            set
+            {
+                userEvents = JsonConvert.SerializeObject(value);
+            }
+        }
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
