@@ -9,5 +9,11 @@ namespace TokenMaster.Models
     {
         public string EventGuid { get; set; }
         public int TokenCount { get; set; }
+
+        public UserEvent(string eventGuid, int tokens)
+        {
+            EventGuid = eventGuid;
+            TokenCount = tokens;
+        }
     }
 }

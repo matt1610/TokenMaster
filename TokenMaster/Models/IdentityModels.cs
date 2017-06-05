@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -19,11 +21,11 @@ namespace TokenMaster.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        private string userEvents { get; set; }
+        
         public string CompanyName { get; set; }
+        public string myCreatedEvents { get; set; }
         public bool EventCreator { get; set; }
-        private string attendingEvents { get; set; }
+        public string attendingEvents { get; set; }
 
         [NotMapped]
         public List<UserEvent> AttendingEvents
@@ -43,19 +45,19 @@ namespace TokenMaster.Models
         }
 
         [NotMapped]
-        public List<EventModel> UserEvents
+        public List<Guid> MyCreatedEvents
         {
             get
             {
-                if (userEvents != null)
+                if (myCreatedEvents != null)
                 {
-                    return JsonConvert.DeserializeObject<List<EventModel>>(userEvents);
+                    return JsonConvert.DeserializeObject<List<Guid>>(myCreatedEvents);
                 }
-                return new List<EventModel>();
+                return new List<Guid>();
             }
             set
             {
-                userEvents = JsonConvert.SerializeObject(value);
+                myCreatedEvents = JsonConvert.SerializeObject(value);
             }
         }
 
@@ -73,5 +75,9 @@ namespace TokenMaster.Models
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<EventModel> EventModels { get; set; }
+
+        public System.Data.Entity.DbSet<TokenMaster.Models.Transaction> Transactions { get; set; }
     }
 }

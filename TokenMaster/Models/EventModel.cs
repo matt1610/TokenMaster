@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -10,13 +11,25 @@ namespace TokenMaster.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        [Required]
         public string EventName { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public string Location { get; set; }
         public string EventOwner { get; set; }
         public string OwnerId { get; set; }
-        public int TotalTokens { get; set; }
-        public int MaxGuestTokens { get; set; }
+        [Required]
+        public int MaxTokens { get; set; }
+        public int TokensUsed { get; set; }
+        [Required]
+        public float TokenPrice { get; set; }
+        [Required]
+        public string Currency { get; set; }
         public string PurchaseItemsJSON { get; set; }
+        [Required]
+        public string AddressVenue { get; set; }
+        [Required]
+        public DateTime DateTime { get; set; }
     }
 }

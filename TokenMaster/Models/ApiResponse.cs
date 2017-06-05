@@ -9,11 +9,13 @@ namespace TokenMaster.Models
     {
         public bool Success { get; set; }
         public string Message { get; set; }
+        public dynamic AdditionalData { get; set; }
 
-        public ApiResponse(bool success, string message)
+        public ApiResponse(bool success, string message, dynamic additionalData = null)
         {
             Success = success;
             Message = message;
+            AdditionalData = additionalData;
         }
     }
 }

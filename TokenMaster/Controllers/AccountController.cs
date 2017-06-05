@@ -49,19 +49,21 @@ namespace TokenMaster.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
-        public async Task<ApiResponse> AddAttendingEvent([FromBody] UserEvent evt)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new ApiResponse(false, "Something went wrong...");
-            }
-            ApplicationUser user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-            user.AttendingEvents.Add(evt);
-            IdentityResult res = await _userManager.UpdateAsync(user);
-            return new ApiResponse(res.Succeeded, res.ToString());
-        }
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<ApiResponse> AddEvent([FromBody] EventModel evt)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return new ApiResponse(false, "Something went wrong...");
+        //    }
+        //    ApplicationUser user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+        //    evt.EventOwner = User.Identity.GetUserName();
+        //    evt.OwnerId = User.Identity.GetUserId();
+        //    user.MyEvents.Add(evt.Id);
+        //    IdentityResult res = await _userManager.UpdateAsync(user);
+        //    return new ApiResponse(res.Succeeded, res.ToString());
+        //}
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
