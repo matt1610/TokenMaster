@@ -31,5 +31,7 @@ namespace TokenMaster.Models
         public string AddressVenue { get; set; }
         [Required]
         public DateTime DateTime { get; set; }
+
+        //public ICollection<> 
     }
 }

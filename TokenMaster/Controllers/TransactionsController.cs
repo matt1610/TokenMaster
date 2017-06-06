@@ -11,7 +11,10 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.SignalR;
+using TokenMaster.Hubs;
 using TokenMaster.Models;
+using TokenMaster.Singletons;
 
 namespace TokenMaster.Controllers
 {
@@ -55,7 +58,7 @@ namespace TokenMaster.Controllers
 
         // POST: api/Transactions
         [ResponseType(typeof(TransactionResponse))]
-        [Authorize]
+        [System.Web.Http.Authorize]
         public async Task<TransactionResponse> PostTransaction(Transaction transaction)
         {
             if (!ModelState.IsValid)
@@ -117,11 +120,21 @@ namespace TokenMaster.Controllers
 
             if (await db.SaveChangesAsync() > 0 && res.Succeeded)
             {
+                SendSuccessToEventClient(transaction);
                 return new TransactionResponse(true, transaction, "This transaction was successful.", userEvent.TokenCount);
             }
 
             return new TransactionResponse(false, transaction, res.Errors.FirstOrDefault());
 
+        }
+
+        private void SendSuccessToEventClient(Transaction transaction)
+        {
+            string socketId =
+                EventClientsManager.Instance.EventDeviceClients.FirstOrDefault(ec => ec.EventId == transaction.EventId.ToString())
+                    .SocketId;
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<TokenHub>();
+            context.Clients.Client(socketId).receiveSuccessfullTransaction(transaction.TokenAmount);
         }
 
 
