@@ -214,7 +214,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventDevicesController.cs" />
     <Compile Include="Controllers\EventModelsController.cs" />
+    <Compile Include="Controllers\EventStandsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -230,12 +232,26 @@
     <Compile Include="Migrations\201706051922157_Transations.Designer.cs">
       <DependentUpon>201706051922157_Transations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706070836543_Stands and Devices.cs" />
+    <Compile Include="Migrations\201706070836543_Stands and Devices.Designer.cs">
+      <DependentUpon>201706070836543_Stands and Devices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706070917577_Stands and Devices updated.cs" />
+    <Compile Include="Migrations\201706070917577_Stands and Devices updated.Designer.cs">
+      <DependentUpon>201706070917577_Stands and Devices updated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706071312231_Changed event Id to guid.cs" />
+    <Compile Include="Migrations\201706071312231_Changed event Id to guid.Designer.cs">
+      <DependentUpon>201706071312231_Changed event Id to guid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApiResponse.cs" />
+    <Compile Include="Models\EventDevice.cs" />
     <Compile Include="Models\EventDeviceClient.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\EventStand.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JoinEventModel.cs" />
     <Compile Include="Models\Transaction.cs" />
@@ -323,6 +339,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706051922157_Transations.resx">
       <DependentUpon>201706051922157_Transations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706070836543_Stands and Devices.resx">
+      <DependentUpon>201706070836543_Stands and Devices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706070917577_Stands and Devices updated.resx">
+      <DependentUpon>201706070917577_Stands and Devices updated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071312231_Changed event Id to guid.resx">
+      <DependentUpon>201706071312231_Changed event Id to guid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

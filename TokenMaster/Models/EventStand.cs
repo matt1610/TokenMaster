@@ -12,8 +12,10 @@ namespace TokenMaster.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        public string EventId { get; set; }
+
         public string Name { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("EventId")]
         public ICollection<EventDevice> EventDevices { get; set; } 
     }
 }

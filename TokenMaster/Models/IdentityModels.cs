@@ -44,6 +44,14 @@ namespace TokenMaster.Models
             }
         }
 
+        public bool AddToMyEvents(Guid eventGuid)
+        {
+            List<Guid> eventGuids = MyCreatedEvents;
+            eventGuids.Add(eventGuid);
+            MyCreatedEvents = eventGuids;
+            return true;
+        }
+
         [NotMapped]
         public List<Guid> MyCreatedEvents
         {
@@ -79,5 +87,8 @@ namespace TokenMaster.Models
         public virtual DbSet<EventModel> EventModels { get; set; }
 
         public System.Data.Entity.DbSet<TokenMaster.Models.Transaction> Transactions { get; set; }
+
+        public DbSet<EventDevice> EventDevices { get; set; }
+        public DbSet<EventStand> EventStands { get; set; }
     }
 }

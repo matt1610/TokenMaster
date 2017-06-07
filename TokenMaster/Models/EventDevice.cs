@@ -11,6 +11,8 @@ namespace TokenMaster.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public Guid EventId { get; set; }
+        public string StandId { get; set; }
 
         public string Name { get; set; }
     }

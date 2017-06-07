@@ -58,7 +58,11 @@ namespace TokenMaster.Controllers
         }
 
 
-
+        /// <summary>
+        /// Normal USer Joins Event or updates token amount
+        /// </summary>
+        /// <param name="joinModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("joinevent")]
         [ResponseType(typeof(ApiResponse))]
@@ -162,6 +166,8 @@ namespace TokenMaster.Controllers
                 return BadRequest(ModelState);
             }
 
+
+
             db.EventModels.Add(eventModel);
             await db.SaveChangesAsync();
 
@@ -181,10 +187,26 @@ namespace TokenMaster.Controllers
             ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             evt.EventOwner = User.Identity.GetUserName();
             evt.OwnerId = User.Identity.GetUserId();
+            
             db.EventModels.Add(evt);
             int res = await db.SaveChangesAsync();
-            
-            return new ApiResponse(res == 1, res.ToString());
+
+            user.AddToMyEvents(evt.Id);
+
+            IdentityResult idRes = await UserManager.UpdateAsync(user);
+
+            if (idRes.Succeeded && res > 0)
+            {
+                return new ApiResponse(true, "Event Created", new
+                {
+                    EventId = evt.Id
+                });
+            }
+            return new ApiResponse(false, "Something went wrong", new
+            {
+                EventId = evt.Id
+            });
+
         }
 
 

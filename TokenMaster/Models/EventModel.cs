@@ -9,8 +9,9 @@ namespace TokenMaster.Models
 {
     public class EventModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public Guid Id = Guid.NewGuid();
         [Required]
         public string EventName { get; set; }
         [Required]
