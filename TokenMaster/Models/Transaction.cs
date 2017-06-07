@@ -16,6 +16,8 @@ namespace TokenMaster.Models
         public string UserId { get; set; }
         [Required]
         public int TokenAmount { get; set; }
+
+        public string StandId { get; set; }
         public DateTime TransactionDate { get; set; }
     }
 }

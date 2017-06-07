@@ -11,14 +11,14 @@ namespace TokenMaster.Models
         public bool Success { get; set; }
         public Transaction Transaction { get; set; }
         public string Message { get; set; }
-        public int EventTokensRemaining { get; set; }
+        public int UsersEventTokensRemaining { get; set; }
 
         public TransactionResponse(bool success, Transaction transaction, string message, int tokensRemaining = 0)
         {
             Success = success;
             Transaction = transaction;
             Message = message;
-            EventTokensRemaining = tokensRemaining;
+            UsersEventTokensRemaining = tokensRemaining;
         }
     }
 }

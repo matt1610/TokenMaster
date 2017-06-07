@@ -106,20 +106,12 @@ namespace TokenMaster.Controllers
             
             db.EventStands.Add(eventStand);
 
-            try
+            if (await db.SaveChangesAsync() > 0)
             {
-                if (await db.SaveChangesAsync() > 0)
-                {
-                    return new ApiResponse(true, "Event Stand Created...");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
+                return new ApiResponse(true, "Event Stand Created...");
             }
 
-             return new ApiResponse(false, "Something went wrong...");
+            return new ApiResponse(false, "Something went wrong...");
         }
 
         // DELETE: api/EventStands/5

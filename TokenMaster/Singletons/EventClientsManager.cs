@@ -9,7 +9,7 @@ namespace TokenMaster.Singletons
 {
     public class EventClientsManager : Singleton<EventClientsManager>
     {
-        public List<EventDeviceClient> EventDeviceClients { get; set; }
+        public List<EventDeviceClient> EventDeviceClients { get; set; } = new List<EventDeviceClient>();
 
         public void AddClient(EventDeviceClient client)
         {

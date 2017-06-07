@@ -10,11 +10,13 @@ namespace TokenMaster.Models
     {
         public string EventId { get; set; }
         public string SocketId { get; set; }
+        public EventStand EventStand { get; set; }
 
-        public EventDeviceClient(string eventId, string socketId)
+        public EventDeviceClient(string eventId, string socketId, EventStand eventStand)
         {
             SocketId = socketId;
             EventId = eventId;
+            EventStand = eventStand;
         }
     }
 }

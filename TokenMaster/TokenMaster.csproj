@@ -244,6 +244,30 @@
     <Compile Include="Migrations\201706071312231_Changed event Id to guid.Designer.cs">
       <DependentUpon>201706071312231_Changed event Id to guid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706071540570_Added key.cs" />
+    <Compile Include="Migrations\201706071540570_Added key.Designer.cs">
+      <DependentUpon>201706071540570_Added key.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706071604403_Changed key.cs" />
+    <Compile Include="Migrations\201706071604403_Changed key.Designer.cs">
+      <DependentUpon>201706071604403_Changed key.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706071608222_Changed key 1.cs" />
+    <Compile Include="Migrations\201706071608222_Changed key 1.Designer.cs">
+      <DependentUpon>201706071608222_Changed key 1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706071613567_Changed key 2.cs" />
+    <Compile Include="Migrations\201706071613567_Changed key 2.Designer.cs">
+      <DependentUpon>201706071613567_Changed key 2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706071658264_Changed key 4.cs" />
+    <Compile Include="Migrations\201706071658264_Changed key 4.Designer.cs">
+      <DependentUpon>201706071658264_Changed key 4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706071733559_Changed key 5.cs" />
+    <Compile Include="Migrations\201706071733559_Changed key 5.Designer.cs">
+      <DependentUpon>201706071733559_Changed key 5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -348,6 +372,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706071312231_Changed event Id to guid.resx">
       <DependentUpon>201706071312231_Changed event Id to guid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071540570_Added key.resx">
+      <DependentUpon>201706071540570_Added key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071604403_Changed key.resx">
+      <DependentUpon>201706071604403_Changed key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071608222_Changed key 1.resx">
+      <DependentUpon>201706071608222_Changed key 1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071613567_Changed key 2.resx">
+      <DependentUpon>201706071613567_Changed key 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071658264_Changed key 4.resx">
+      <DependentUpon>201706071658264_Changed key 4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706071733559_Changed key 5.resx">
+      <DependentUpon>201706071733559_Changed key 5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

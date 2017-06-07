@@ -97,6 +97,18 @@ namespace TokenMaster.Controllers
                 return new TransactionResponse(false, transaction, "You do not have enough tokens to make this transaction.", userEvent.TokenCount);
             }
 
+            List<string> thisEventStands =
+                db.EventStands.Where(es => es.Id.ToString().ToLower() == transaction.StandId.ToLower())
+                    .Select(es => es.Id.ToString().ToLower()).ToList();
+
+
+            if (!thisEventStands.Contains(transaction.StandId.ToLower()))
+            {
+                return new TransactionResponse(false, transaction, "This stand does not belong to this event.");
+            }
+
+
+
 
             //Deduct tokens from the users token store for THIS event.
             userEvent.TokenCount -= transaction.TokenAmount;
@@ -131,7 +143,7 @@ namespace TokenMaster.Controllers
         private void SendSuccessToEventClient(Transaction transaction)
         {
             string socketId =
-                EventClientsManager.Instance.EventDeviceClients.FirstOrDefault(ec => ec.EventId == transaction.EventId.ToString())
+                EventClientsManager.Instance.EventDeviceClients.FirstOrDefault(ec => ec.EventStand.Id.ToString() == transaction.StandId.ToLower())
                     .SocketId;
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<TokenHub>();
             context.Clients.Client(socketId).receiveSuccessfullTransaction(transaction.TokenAmount);

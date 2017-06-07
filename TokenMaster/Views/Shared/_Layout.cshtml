@@ -37,5 +37,22 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var conn = $.hubConnection();
+        var hub = conn.createHubProxy('TokenHub');
+        hub.on('receiveSuccessfullTransaction', function (data) {
+            alert(data);
+        });
+        conn.start(function() {
+            hub.invoke("RegisterEventDevice", "f43c8b28-dba2-45f8-b82e-a20e68ecd9a8", "13BE2FB0-9B4B-E711-9BEF-001C4287BE30");
+        });
+
+        
+    });
+</script>
 </body>
 </html>

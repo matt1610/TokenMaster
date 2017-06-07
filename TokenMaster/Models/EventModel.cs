@@ -11,7 +11,7 @@ namespace TokenMaster.Models
     {
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid Id = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
         public string EventName { get; set; }
         [Required]
@@ -32,7 +32,6 @@ namespace TokenMaster.Models
         public string AddressVenue { get; set; }
         [Required]
         public DateTime DateTime { get; set; }
-        [ForeignKey("Id")]
         public ICollection<EventStand> EventStands { get; set; }
     }
 }

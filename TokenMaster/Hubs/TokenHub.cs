@@ -10,16 +10,17 @@ namespace TokenMaster.Hubs
 {
     public class TokenHub : Hub
     {
-        
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public void Hello()
         {
             Clients.All.hello();
-            
         }
 
-        public void RegisterEventDevice(string eventGuid)
+        public void RegisterEventDevice(string eventGuid, string standId)
         {
-            EventClientsManager.Instance.AddClient(new EventDeviceClient( eventGuid, Context.ConnectionId));
+            EventStand eventStand = db.EventStands.FirstOrDefault(es => es.Id.ToString() == standId);
+            EventClientsManager.Instance.AddClient(new EventDeviceClient( eventGuid, Context.ConnectionId, eventStand));
             Clients.Caller.registerSuccess(true);
         }
 
