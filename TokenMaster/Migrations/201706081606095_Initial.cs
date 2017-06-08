@@ -3,21 +3,49 @@ namespace TokenMaster.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class NewAgain : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.EventModels",
+                "dbo.EventDevices",
+                c => new
+                    {
+                        EdId = c.Guid(nullable: false, identity: true),
+                        EventId = c.Guid(nullable: false),
+                        StandId = c.String(),
+                        Name = c.String(),
+                        EventStand_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.EdId)
+                .ForeignKey("dbo.EventStands", t => t.EventStand_Id)
+                .Index(t => t.EventStand_Id);
+            
+            CreateTable(
+                "dbo.EventStands",
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
+                        EventId = c.String(),
+                        Name = c.String(),
+                        EventModel_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.EventModels", t => t.EventModel_Id)
+                .Index(t => t.EventModel_Id);
+            
+            CreateTable(
+                "dbo.EventModels",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
                         EventName = c.String(nullable: false),
                         Description = c.String(nullable: false),
                         Location = c.String(nullable: false),
                         EventOwner = c.String(),
                         OwnerId = c.String(),
                         MaxTokens = c.Int(nullable: false),
+                        TokensUsed = c.Int(nullable: false),
                         TokenPrice = c.Single(nullable: false),
                         Currency = c.String(nullable: false),
                         PurchaseItemsJSON = c.String(),
@@ -48,6 +76,20 @@ namespace TokenMaster.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.Transactions",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        EventId = c.Guid(nullable: false),
+                        UserId = c.String(),
+                        TokenAmount = c.Int(nullable: false),
+                        StandId = c.String(),
+                        DeviceId = c.String(),
+                        TransactionDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -106,18 +148,25 @@ namespace TokenMaster.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.EventStands", "EventModel_Id", "dbo.EventModels");
+            DropForeignKey("dbo.EventDevices", "EventStand_Id", "dbo.EventStands");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.EventStands", new[] { "EventModel_Id" });
+            DropIndex("dbo.EventDevices", new[] { "EventStand_Id" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Transactions");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.EventModels");
+            DropTable("dbo.EventStands");
+            DropTable("dbo.EventDevices");
         }
     }
 }

@@ -111,7 +111,10 @@ namespace TokenMaster.Controllers
                 return new ApiResponse(true, "Event Stand Created...");
             }
 
-            return new ApiResponse(false, "Something went wrong...");
+            return new ApiResponse(false, "Something went wrong...", new
+            {
+                StandId = eventStand.Id
+            });
         }
 
         // DELETE: api/EventStands/5

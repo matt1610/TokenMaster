@@ -7,13 +7,13 @@ namespace TokenMaster.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Changedkey4 : IMigrationMetadata
+    public sealed partial class Initial2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Changedkey4));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201706071658264_Changed key 4"; }
+            get { return "201706081608169_Initial2"; }
         }
         
         string IMigrationMetadata.Source

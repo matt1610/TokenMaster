@@ -15,6 +15,7 @@ namespace TokenMaster.Models
         public string EventId { get; set; }
 
         public string Name { get; set; }
+        public virtual EventModel EventModel { get; set; }
 
         //[ForeignKey("EventId")]
         public virtual ICollection<EventDevice> EventDevices { get; set; } 
