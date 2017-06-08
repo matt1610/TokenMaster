@@ -143,8 +143,9 @@ namespace TokenMaster.Controllers
         private void SendSuccessToEventClient(Transaction transaction)
         {
             string socketId =
-                EventClientsManager.Instance.EventDeviceClients.FirstOrDefault(ec => ec.EventStand.Id.ToString() == transaction.StandId.ToLower())
-                    .SocketId;
+                EventClientsManager.Instance.EventDeviceClients.FirstOrDefault(
+                    ec => ec.EventStand.Id.ToString() == transaction.StandId.ToLower() && ec.DeviceId.ToLower() == transaction.DeviceId.ToLower()
+                    )?.SocketId;
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<TokenHub>();
             context.Clients.Client(socketId).receiveSuccessfullTransaction(transaction.TokenAmount);
         }

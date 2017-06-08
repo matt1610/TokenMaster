@@ -268,6 +268,10 @@
     <Compile Include="Migrations\201706071733559_Changed key 5.Designer.cs">
       <DependentUpon>201706071733559_Changed key 5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706081203515_Device ID.cs" />
+    <Compile Include="Migrations\201706081203515_Device ID.Designer.cs">
+      <DependentUpon>201706081203515_Device ID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -390,6 +394,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706071733559_Changed key 5.resx">
       <DependentUpon>201706071733559_Changed key 5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706081203515_Device ID.resx">
+      <DependentUpon>201706081203515_Device ID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

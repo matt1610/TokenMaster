@@ -44,14 +44,35 @@
     $(function() {
         var conn = $.hubConnection();
         var hub = conn.createHubProxy('TokenHub');
-        hub.on('receiveSuccessfullTransaction', function (data) {
-            alert(data);
-        });
-        conn.start(function() {
-            hub.invoke("RegisterEventDevice", "f43c8b28-dba2-45f8-b82e-a20e68ecd9a8", "13BE2FB0-9B4B-E711-9BEF-001C4287BE30");
+        hub.on('registerSuccess', function (data) {
+            $('._jsStatus').html(JSON.parse(data).Msg);
         });
 
-        
+        hub.on('receiveSuccessfullTransaction',
+            function(data) {
+                $('._jsTransactions').append('<p>' + data + '</p>');
+            });
+
+        hub.on('RETURNDEBUGDETAILS', function (eventId, standId, deviceId) {
+            $('._jsEventId').val(eventId);
+            $('._jsStandId').val(standId);
+            $('._jsDeviceId').val(deviceId);
+        });
+
+        //eventId, standId, deviceId.
+        conn.start(function() {
+            $('._jsStatus').html("Websocket connection established, please register device...");
+
+            hub.invoke('GETDEBUGDETAILS');
+        });
+
+        $('._jsConnect').on('click',
+            function(evt) {
+                //hub.invoke("RegisterEventDevice", "f43c8b28-dba2-45f8-b82e-a20e68ecd9a8", "13BE2FB0-9B4B-E711-9BEF-001C4287BE30", "deviceId");
+                hub.invoke("RegisterEventDevice", $('._jsEventId').val(), $('._jsStandId').val(), $('._jsDeviceId').val());
+            });
+
+
     });
 </script>
 </body>

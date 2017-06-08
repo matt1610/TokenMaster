@@ -18,6 +18,7 @@ namespace TokenMaster.Models
         public int TokenAmount { get; set; }
 
         public string StandId { get; set; }
+        public string DeviceId { get; set; }
         public DateTime TransactionDate { get; set; }
     }
 }
