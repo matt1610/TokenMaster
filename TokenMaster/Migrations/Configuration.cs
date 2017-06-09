@@ -13,7 +13,7 @@ namespace TokenMaster.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "TokenMaster.Models.ApplicationDbContext";
         }
 

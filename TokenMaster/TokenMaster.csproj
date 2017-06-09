@@ -224,9 +224,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\TokenHub.cs" />
-    <Compile Include="Migrations\201706091314078_Working.cs" />
-    <Compile Include="Migrations\201706091314078_Working.Designer.cs">
-      <DependentUpon>201706091314078_Working.cs</DependentUpon>
+    <Compile Include="Migrations\201706091527289_This Guy.cs" />
+    <Compile Include="Migrations\201706091527289_This Guy.Designer.cs">
+      <DependentUpon>201706091527289_This Guy.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -316,8 +316,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706091314078_Working.resx">
-      <DependentUpon>201706091314078_Working.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706091527289_This Guy.resx">
+      <DependentUpon>201706091527289_This Guy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
