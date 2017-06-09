@@ -88,7 +88,7 @@ namespace TokenMaster.Controllers
         }
 
         // POST: api/EventDevices
-        [ResponseType(typeof(ApiResponse))]
+        //[ResponseType(typeof(ApiResponse))]
         public async Task<ApiResponse> PostEventDevice(EventDevice eventDevice)
         {
             if (!ModelState.IsValid)

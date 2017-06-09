@@ -224,9 +224,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\TokenHub.cs" />
+<<<<<<< HEAD
     <Compile Include="Migrations\201706091206555_Initial.cs" />
     <Compile Include="Migrations\201706091206555_Initial.Designer.cs">
       <DependentUpon>201706091206555_Initial.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\201706081606095_Initial.cs" />
+    <Compile Include="Migrations\201706081606095_Initial.Designer.cs">
+      <DependentUpon>201706081606095_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706081608169_Initial2.cs" />
+    <Compile Include="Migrations\201706081608169_Initial2.Designer.cs">
+      <DependentUpon>201706081608169_Initial2.cs</DependentUpon>
+>>>>>>> 5d3e2531bb6e182d41c5f26edfff90cbf64aaa38
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -318,8 +328,16 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\201706091206555_Initial.resx">
       <DependentUpon>201706091206555_Initial.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Migrations\201706081606095_Initial.resx">
+      <DependentUpon>201706081606095_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706081608169_Initial2.resx">
+      <DependentUpon>201706081608169_Initial2.cs</DependentUpon>
+>>>>>>> 5d3e2531bb6e182d41c5f26edfff90cbf64aaa38
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
