@@ -25,11 +25,20 @@ namespace TokenMaster.Hubs
             try
             {
                 EventStand eventStand = db.EventStands.FirstOrDefault(es => es.Id.ToString() == standId);
-                EventClientsManager.Instance.AddClient(new EventDeviceClient(eventGuid, Context.ConnectionId, eventStand, deviceId));
+
+
+                int clientIndex = EventClientsManager.Instance.EventDeviceClients.FindIndex(ec => ec.DeviceId == deviceId);
+                EventDeviceClient newClient = new EventDeviceClient(eventGuid, Context.ConnectionId, eventStand, deviceId);
+                if (clientIndex > -1)
+                {
+                    EventClientsManager.Instance.EventDeviceClients[clientIndex] = newClient;
+                }
+
+                EventClientsManager.Instance.AddClient(newClient);
 
                 dynamic response = new
                 {
-                    Msg = "Connected. Awaiting Transations..",
+                    Msg = "Connected. Awaiting Transactions..",
                     Success = true
                 };
                 Clients.Caller.registerSuccess(JsonConvert.SerializeObject(response));
