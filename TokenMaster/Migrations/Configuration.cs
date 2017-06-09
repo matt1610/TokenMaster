@@ -31,7 +31,9 @@ namespace TokenMaster.Migrations
                     DateTime = DateTime.Now.AddDays(7),
                     Description = "This is the description",
                     EventName = "This is the event name",
-                    Location = "The location"
+                    Location = "The location",
+                    MaxTokens = 10000,
+                    TokenPrice = 3.57f
 
                 };
 
