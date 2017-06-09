@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
@@ -49,20 +50,21 @@ namespace TokenMaster.Hubs
         {
             try
             {
-                EventModel evt =
-                db.EventModels.FirstOrDefault( em => em.EventStands.Count > 0 );
-                EventStand stand = evt.EventStands.FirstOrDefault(st => st.EventDevices.Count > 0);
-                EventDevice device = stand.EventDevices.FirstOrDefault();
-                
+
+                EventModel eventDeviceDb = db
+                    .EventModels
+                    .Include(em => em.EventStands.Select(es => es.EventDevices))
+                    .FirstOrDefault();
+
 
                 if (DEBUG)
                 {
-                    if (evt != null && stand != null && device != null)
+                    if (eventDeviceDb != null)
                     {
                         Clients.Caller.RETURNDEBUGDETAILS(
-                        evt.Id,
-                        stand.Id,
-                        device.Id
+                        eventDeviceDb.Id,
+                        eventDeviceDb.EventStands.FirstOrDefault()?.Id,
+                        eventDeviceDb.EventStands.FirstOrDefault()?.EventDevices.FirstOrDefault()?.Id
                         );
                     }
                     else

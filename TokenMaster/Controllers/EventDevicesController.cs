@@ -96,14 +96,19 @@ namespace TokenMaster.Controllers
                 return new ApiResponse(false, "Model state in invalid....");
             }
 
-            if (db.EventModels.FirstOrDefault(em => em.Id == eventDevice.EventId) == null)
+            EventDevice eventDeviceDb = await db
+                .EventDevices
+                .Include(ed => ed.EventStand.EventModel)
+                .SingleOrDefaultAsync(ed => ed.Id == eventDevice.Id);
+
+            if (db.EventModels.FirstOrDefault(em => em.Id == eventDeviceDb.EventStand.EventModel.Id) == null)
             {
                 return new ApiResponse(false, "Event does not exist....");
             }
 
             ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            if ( !user.MyCreatedEvents.Contains(new Guid(eventDevice.EventId.ToString())) )
+            if ( !user.MyCreatedEvents.Contains(eventDeviceDb.EventStand.EventModel.Id)) 
             {
                 return new ApiResponse(false, "You cannot add a stand to this event....");
             }

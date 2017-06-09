@@ -99,7 +99,7 @@ namespace TokenMaster.Controllers
 
             ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            if ( !user.MyCreatedEvents.Contains( new Guid(eventStand.EventId)) )
+            if ( !user.MyCreatedEvents.Contains( eventStand.EventId) )
             {
                 return new ApiResponse(false, "You cannot add a stand to this event....");
             }
