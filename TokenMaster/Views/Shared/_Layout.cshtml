@@ -50,7 +50,7 @@
 
         hub.on('receiveSuccessfullTransaction',
             function(data) {
-                $('._jsTransactions').append('<p>' + data + '</p>');
+                $('._jsTransactions').append('<button type="button" class="btn btn-success">' + data + '</button>');
             });
 
         hub.on('RETURNDEBUGDETAILS', function (eventId, standId, deviceId) {
