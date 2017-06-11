@@ -99,6 +99,7 @@
 
 
             $('._jsFbLogin').on('click', function(evt) {
+                //window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Ftokenmaster.azurewebsites.net%2F&state=KEC1SdLGwegTUWmpcMYJ2Hq1WhgCyp7t1Ghbdvd0dT81";
                 window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A16193%2F&state=PD73LENIHmeo2y0XcxukCyR_UAx88hXbKLmPKF33ppA1";
             });
 
@@ -136,7 +137,9 @@
                         }
                     }
                 });
+
             }
+
 
             function signUpExternalUser(token, email) {
                 $.ajax({
@@ -150,7 +153,8 @@
                         Email : email
                     },
                     success: function (response) {
-                        window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A16193%2F&state=PD73LENIHmeo2y0XcxukCyR_UAx88hXbKLmPKF33ppA1";
+                        //window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A16193%2F&state=PD73LENIHmeo2y0XcxukCyR_UAx88hXbKLmPKF33ppA1";
+                        window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Ftokenmaster.azurewebsites.net%2F&state=KEC1SdLGwegTUWmpcMYJ2Hq1WhgCyp7t1Ghbdvd0dT81";
                     }
                 });
             }
