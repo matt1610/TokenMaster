@@ -8,6 +8,30 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '649949561872494',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -21,7 +45,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("API", "Index", "Help", new {area = ""}, null)</li>
+                    <li class="_jsFbLogin">Login with Facebook</li>
                 </ul>
             </div>
         </div>
@@ -38,42 +63,102 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
 
-<script type="text/javascript">
-    $(function() {
-        var conn = $.hubConnection();
-        var hub = conn.createHubProxy('TokenHub');
-        hub.on('registerSuccess', function (data) {
-            $('._jsStatus').html(JSON.parse(data).Msg);
-        });
-
-        hub.on('receiveSuccessfullTransaction',
-            function(data) {
-                $('._jsTransactions').append('<button type="button" class="btn btn-success">' + data + '</button>');
+    <script type="text/javascript">
+        $(function () {
+            var conn = $.hubConnection();
+            var hub = conn.createHubProxy('TokenHub');
+            hub.on('registerSuccess', function (data) {
+                $('._jsStatus').html(JSON.parse(data).Msg);
             });
 
-        hub.on('RETURNDEBUGDETAILS', function (eventId, standId, deviceId) {
-            $('._jsEventId').val(eventId);
-            $('._jsStandId').val(standId);
-            $('._jsDeviceId').val(deviceId);
-        });
+            hub.on('receiveSuccessfullTransaction',
+                function (data) {
+                    $('._jsTransactions').append('<button type="button" class="btn btn-success">' + data + '</button>');
+                });
 
-        //eventId, standId, deviceId.
-        conn.start(function() {
-            $('._jsStatus').html("Websocket connection established, please register device...");
+            hub.on('RETURNDEBUGDETAILS', function (eventId, standId, deviceId) {
+                $('._jsEventId').val(eventId);
+                $('._jsStandId').val(standId);
+                $('._jsDeviceId').val(deviceId);
+            });
 
-            hub.invoke('GETDEBUGDETAILS');
-        });
+            //eventId, standId, deviceId.
+            conn.start(function () {
+                $('._jsStatus').html("Websocket connection established, please register device...");
 
-        $('._jsConnect').on('click',
-            function(evt) {
-                //hub.invoke("RegisterEventDevice", "f43c8b28-dba2-45f8-b82e-a20e68ecd9a8", "13BE2FB0-9B4B-E711-9BEF-001C4287BE30", "deviceId");
-                hub.invoke("RegisterEventDevice", $('._jsEventId').val(), $('._jsStandId').val(), $('._jsDeviceId').val());
+                hub.invoke('GETDEBUGDETAILS');
+            });
+
+            $('._jsConnect').on('click',
+                function (evt) {
+                    //hub.invoke("RegisterEventDevice", "f43c8b28-dba2-45f8-b82e-a20e68ecd9a8", "13BE2FB0-9B4B-E711-9BEF-001C4287BE30", "deviceId");
+                    hub.invoke("RegisterEventDevice", $('._jsEventId').val(), $('._jsStandId').val(), $('._jsDeviceId').val());
+                });
+
+
+            $('._jsFbLogin').on('click', function(evt) {
+                window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A16193%2F&state=PD73LENIHmeo2y0XcxukCyR_UAx88hXbKLmPKF33ppA1";
             });
 
 
-    });
-</script>
+            getAccessToken();
+
+            function getAccessToken() {
+                if (location.hash) {
+                    if (location.hash.split('access_token=')) {
+                        var accesstoken = location.hash.split('access_token=')[1].split('&')[0];
+                        if (accesstoken) {
+                            isUserRegistered(accesstoken);
+                        }
+
+                    }
+                }
+            }
+
+            function isUserRegistered(token) {
+                $.ajax({
+                    method: 'GET',
+                    url: '/api/Account/UserInfo',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    success : function(response) {
+                        if (response.HasRegistered) {
+                            localStorage.setItem('accessToken', token);
+                            localStorage.setItem('userName', response.Email);
+                            alert("User is registered!!");
+                        } else {
+                            signUpExternalUser(token, response.Email);
+                            console.log(response);
+                        }
+                    }
+                });
+            }
+
+            function signUpExternalUser(token, email) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/Account/RegisterExternal',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    data : {
+                        Email : email
+                    },
+                    success: function (response) {
+                        window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A16193%2F&state=PD73LENIHmeo2y0XcxukCyR_UAx88hXbKLmPKF33ppA1";
+                    }
+                });
+            }
+
+
+        });
+
+
+    </script>
 </body>
 </html>

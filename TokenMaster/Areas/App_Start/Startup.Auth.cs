@@ -5,11 +5,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using TokenMaster.Providers;
 using TokenMaster.Models;
+using TokenMaster.SocialLogin;
 
 namespace TokenMaster
 {
@@ -54,10 +56,19 @@ namespace TokenMaster
             //app.UseTwitterAuthentication(
             //    consumerKey: "",
             //    consumerSecret: "");
+            
+            FacebookAuthenticationOptions options = new FacebookAuthenticationOptions()
+            {
+                AppId = "649949561872494",
+                AppSecret = "3b884225bbbaaeed29d84abeaaa5cc36",
+                UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=email,id",
+                BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                Scope = { "email" }
+            };
 
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+            //options.Scope.Add("email");
+
+            app.UseFacebookAuthentication(options);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
