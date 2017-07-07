@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json;
 using TokenMaster.Hubs;
 using TokenMaster.Models;
 using TokenMaster.Singletons;
@@ -59,12 +60,15 @@ namespace TokenMaster.Controllers
         // POST: api/Transactions
         [ResponseType(typeof(TransactionResponse))]
         [System.Web.Http.Authorize]
-        public async Task<TransactionResponse> PostTransaction(Transaction transaction)
+        [HttpPost]
+        public async Task<TransactionResponse> PostTransaction(TransactionRequest transactionRequest)
         {
             if (!ModelState.IsValid)
             {
-                return new TransactionResponse(false, transaction, "Model state is incorrect...");
+                return new TransactionResponse(false, null, "Model state is incorrect...");
             }
+
+            Transaction transaction = new Transaction(transactionRequest);
 
             // Get the event the user is attempting to make a transaction against.
             EventModel theEvent = await db.EventModels.FirstOrDefaultAsync(em => em.Id == transaction.EventId);
@@ -82,8 +86,8 @@ namespace TokenMaster.Controllers
             // Get the current user object to see if they have joined this event.
             ApplicationUser user = await UserManager.Users.FirstOrDefaultAsync(u => u.Id == transaction.UserId);
 
-            UserEvent userEvent = user.AttendingEvents.FirstOrDefault(e => e.EventGuid == transaction.EventId.ToString());
-            int index = user.AttendingEvents.FindIndex(e => e.EventGuid == transaction.EventId.ToString());
+            UserEvent userEvent = user.AttendingEvents.FirstOrDefault(e => e.EventGuid.ToLower() == transaction.EventId.ToString().ToLower());
+            int index = user.AttendingEvents.FindIndex(e => e.EventGuid.ToLower() == transaction.EventId.ToString().ToLower());
 
             if (userEvent == null)
             {
@@ -132,7 +136,15 @@ namespace TokenMaster.Controllers
 
             if (await db.SaveChangesAsync() > 0 && res.Succeeded)
             {
-                SendSuccessToEventClient(transaction);
+                try
+                {
+                    SendSuccessToEventClient(transaction);
+                }
+                catch (Exception ex)
+                {
+                    return new TransactionResponse(true, transaction, "This transaction was successful, but the device that receives the success notice may not be connected, please present this success screen to a device operator.", userEvent.TokenCount, ex);
+                    throw;
+                }
                 return new TransactionResponse(true, transaction, "This transaction was successful.", userEvent.TokenCount);
             }
 

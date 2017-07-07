@@ -20,5 +20,13 @@ namespace TokenMaster.Models
         public string StandId { get; set; }
         public string DeviceId { get; set; }
         public DateTime TransactionDate { get; set; }
+
+        public Transaction(TransactionRequest transactionRequest)
+        {
+            EventId = new Guid(transactionRequest.EventId);
+            StandId = transactionRequest.StandId;
+            DeviceId = transactionRequest.DeviceId;
+            TokenAmount = transactionRequest.TokenAmount;
+        }
     }
 }

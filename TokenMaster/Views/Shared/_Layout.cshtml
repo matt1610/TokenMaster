@@ -67,7 +67,7 @@
 
     <script type="text/javascript">
         $(function () {
-            var conn = $.hubConnection();
+            var conn = $.hubConnection("http://tokenmaster.azurewebsites.net/");
             var hub = conn.createHubProxy('TokenHub');
             hub.on('registerSuccess', function (data) {
                 $('._jsStatus').html(JSON.parse(data).Msg);

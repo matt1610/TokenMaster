@@ -12,13 +12,15 @@ namespace TokenMaster.Models
         public Transaction Transaction { get; set; }
         public string Message { get; set; }
         public int UsersEventTokensRemaining { get; set; }
+        public dynamic AdditionalData { get; set; }
 
-        public TransactionResponse(bool success, Transaction transaction, string message, int tokensRemaining = 0)
+        public TransactionResponse(bool success, Transaction transaction, string message, int tokensRemaining = 0, dynamic additionalData = null)
         {
             Success = success;
             Transaction = transaction;
             Message = message;
             UsersEventTokensRemaining = tokensRemaining;
+            AdditionalData = additionalData;
         }
     }
 }
