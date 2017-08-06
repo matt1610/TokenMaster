@@ -67,7 +67,17 @@
 
     <script type="text/javascript">
         $(function () {
-            var conn = $.hubConnection("http://tokenmaster.azurewebsites.net/");
+            var deviceId = "968fbddf-6d62-e711-9bf0-001c4287be30";
+            var deviceId = "a0d66e62-0768-4e98-9ad9-cb60ae504b21";
+
+            var conn;
+
+            if (window.location.origin.indexOf('localhost') > -1) {
+                conn = $.hubConnection();
+            } else {
+                conn = $.hubConnection("http://tokenmaster.azurewebsites.net/");
+            }
+
             var hub = conn.createHubProxy('TokenHub');
             hub.on('registerSuccess', function (data) {
                 $('._jsStatus').html(JSON.parse(data).Msg);
@@ -82,6 +92,12 @@
                 $('._jsEventId').val(eventId);
                 $('._jsStandId').val(standId);
                 $('._jsDeviceId').val(deviceId);
+            });
+
+            hub.on('receiveEventDetails', function(did, standId, eventId) {
+                if (did == deviceId) {
+                    hub.invoke("RegisterEventDevice", eventId, standId, did);
+                }
             });
 
             //eventId, standId, deviceId.

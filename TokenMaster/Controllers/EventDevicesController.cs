@@ -11,10 +11,13 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.SignalR;
+using TokenMaster.Hubs;
 using TokenMaster.Models;
 
 namespace TokenMaster.Controllers
 {
+    [RoutePrefix("api/EventDevices")]
     public class EventDevicesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -87,13 +90,28 @@ namespace TokenMaster.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [HttpPost]
+        [Route("assignDevice")]
+        public async Task<ApiResponse> AssignDeviceToStand([FromBody]AssignDeviceRequestModel assignDeviceRequest)
+        {
+            EventDevice eventDevice = await db.EventDevices.FindAsync(new Guid(assignDeviceRequest.DeviceId));
+            eventDevice.StandId = new Guid(assignDeviceRequest.StandId);
+
+            await db.SaveChangesAsync();
+
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<TokenHub>();
+            context.Clients.All.receiveEventDetails(eventDevice.Id, eventDevice.StandId, assignDeviceRequest.EventId);
+
+            return new ApiResponse(true, $"{assignDeviceRequest.DeviceId} Assigned to {assignDeviceRequest.StandId}");
+        }
+
         // POST: api/EventDevices
         //[ResponseType(typeof(ApiResponse))]
         public async Task<ApiResponse> PostEventDevice(EventDevice eventDevice)
         {
             if (!ModelState.IsValid)
             {
-                return new ApiResponse(false, "Model state in invalid....");
+                return new ApiResponse(false, "Model state is invalid....");
             }
 
             EventDevice eventDeviceDb = await db

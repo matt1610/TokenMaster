@@ -161,8 +161,7 @@ namespace TokenMaster.Controllers
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<TokenHub>();
             context.Clients.Client(socketId).receiveSuccessfullTransaction(transaction.TokenAmount);
         }
-
-
+        
 
         private bool EventModelExists(Guid id)
         {
