@@ -61,8 +61,17 @@ namespace TokenMaster.Controllers
         [ResponseType(typeof(TransactionResponse))]
         [System.Web.Http.Authorize]
         [HttpPost]
-        public async Task<TransactionResponse> PostTransaction(TransactionRequest transactionRequest)
+        public async Task<TransactionResponse> PostTransaction(TransactionRequestModel transactionRequestModel)
         {
+            TransactionRequest transactionRequest = new TransactionRequest(transactionRequestModel);
+            
+            EventStand eventStand = db.EventStands.FirstOrDefault(es => es.EventDevices.Any(ed => ed.Id.ToString() == transactionRequest.DeviceId));
+
+            EventModel eventModel = db.EventModels.FirstOrDefault(em => em.EventStands.Any(es => es.Id.Equals(eventStand.Id)));
+
+            transactionRequest.StandId = eventStand?.Id.ToString();
+            transactionRequest.EventId = eventModel?.Id.ToString();
+
             if (!ModelState.IsValid)
             {
                 return new TransactionResponse(false, null, "Model state is incorrect...");

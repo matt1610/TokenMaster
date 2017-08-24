@@ -12,5 +12,11 @@ namespace TokenMaster.Models
         public string StandId { get; set; }
         public string DeviceId { get; set; }
         public int TokenAmount { get; set; }
+
+        public TransactionRequest(TransactionRequestModel transactionRequestModel)
+        {
+            DeviceId = transactionRequestModel.DeviceId;
+            TokenAmount = transactionRequestModel.TokenAmount;
+        }
     }
 }

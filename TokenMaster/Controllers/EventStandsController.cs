@@ -15,6 +15,7 @@ using TokenMaster.Models;
 
 namespace TokenMaster.Controllers
 {
+    [RoutePrefix("api/EventStands")]
     public class EventStandsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -50,6 +51,21 @@ namespace TokenMaster.Controllers
             }
 
             return Ok(eventStand);
+        }
+
+        [HttpGet]
+        [Route("getStandsForEvent/{eventId}")]
+        public List<EventStandsResponse> GetStandsForEvent(string eventId)
+        {
+            List<EventStandsResponse> eventStands = db.EventStands.Select(es =>
+                new EventStandsResponse()
+                {
+                    StandId = es.Id,
+                    Name = es.Name
+                }
+            ).ToList();
+            return eventStands;
+
         }
 
         // PUT: api/EventStands/5

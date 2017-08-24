@@ -248,10 +248,12 @@
     <Compile Include="Models\EventDeviceClient.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventStand.cs" />
+    <Compile Include="Models\EventStandsResponse.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JoinEventModel.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionRequest.cs" />
+    <Compile Include="Models\TransactionRequestModel.cs" />
     <Compile Include="Models\TransactionResponse.cs" />
     <Compile Include="Models\UserEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -300,6 +302,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\qrcode.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config">
@@ -335,6 +338,9 @@
     <EmbeddedResource Include="Migrations\201706091527289_This Guy.resx">
       <DependentUpon>201706091527289_This Guy.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
