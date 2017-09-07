@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -89,16 +89,18 @@
                     $('._jsTransactions').append('<button type="button" class="btn btn-success">' + data + '</button>');
                 });
 
-            hub.on('RETURNDEBUGDETAILS', function (eventId, standId, deviceId) {
+            hub.on('RETURNDEBUGDETAILS', function (eventId, standId, did) {
+
+                deviceId = did;
 
                 var jsonObject = {
                     eventId: eventId,
                     standId: standId,
-                    deviceId: deviceId
+                    deviceId: did
                 };
 
                 var qrcode = new QRCode("qrcode", {
-                    text: deviceId,
+                    text: did,
                     width: 256,
                     height: 256,
                     colorDark: "#000000",
@@ -108,7 +110,7 @@
 
                 $('._jsEventId').val(eventId);
                 $('._jsStandId').val(standId);
-                $('._jsDeviceId').val(deviceId);
+                $('._jsDeviceId').val(did);
             });
 
             hub.on('receiveEventDetails', function(did, standId, eventId) {
@@ -172,7 +174,8 @@
                         if (response.HasRegistered) {
                             localStorage.setItem('accessToken', token);
                             localStorage.setItem('userName', response.Email);
-                            alert("User is registered!!");
+                            //alert("User is registered!!");
+                            document.querySelector('body').style.background = "greenyellow";
                         } else {
                             signUpExternalUser(token, response.Email);
                             console.log(response);
@@ -184,6 +187,7 @@
 
 
             function signUpExternalUser(token, email) {
+                console.log(token);
                 $.ajax({
                     method: 'POST',
                     url: '/api/Account/RegisterExternal',

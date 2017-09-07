@@ -365,6 +365,7 @@ namespace TokenMaster.Controllers
         public async Task<IHttpActionResult> RegisterExternal()
         {
             var info = await Authentication.GetExternalLoginInfoAsync();
+
             if (info == null)
             {
                 return InternalServerError();
@@ -438,6 +439,7 @@ namespace TokenMaster.Controllers
             public string LoginProvider { get; set; }
             public string ProviderKey { get; set; }
             public string UserName { get; set; }
+            public string FirstName { get; set; }
 
             public IList<Claim> GetClaims()
             {
@@ -447,6 +449,11 @@ namespace TokenMaster.Controllers
                 if (UserName != null)
                 {
                     claims.Add(new Claim(ClaimTypes.Name, UserName, null, LoginProvider));
+                }
+
+                if (FirstName != null)
+                {
+                    claims.Add(new Claim(ClaimTypes.GivenName, FirstName, null, LoginProvider));
                 }
 
                 return claims;

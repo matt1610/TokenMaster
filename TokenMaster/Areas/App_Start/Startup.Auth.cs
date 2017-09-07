@@ -61,12 +61,21 @@ namespace TokenMaster
             {
                 AppId = "649949561872494",
                 AppSecret = "3b884225bbbaaeed29d84abeaaa5cc36",
-                UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=email,id",
+                //UserInformationEndpoint = "https://graph.facebook.com/v2.9/me?fields=email,id,first_name,last_name,picture",
+                UserInformationEndpoint = "https://graph.facebook.com/v2.9/me?fields=email,id,first_name",
+                //UserInformationEndpoint = "https://graph.facebook.com/v2.9/me?fields=email,id",
                 BackchannelHttpHandler = new FacebookBackChannelHandler(),
-                Scope = { "email" }
+                //Scope = { "email", "id", "first_name", "last_name", "picture" }
+                //Scope = { "email", "id", "first_name" }
+                Scope = { "email", "public_profile" }
+                //Scope = { "email" }
             };
 
             //options.Scope.Add("email");
+            //options.Scope.Add("id");
+            //options.Scope.Add("first_name");
+            //options.Scope.Add("last_name");
+            //options.Scope.Add("picture");
 
             app.UseFacebookAuthentication(options);
 
